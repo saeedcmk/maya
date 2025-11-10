@@ -1,0 +1,20 @@
+import type { Prisma } from "@prisma/client";
+import { apiClient } from "@/lib/data/api/api-client";
+import type { ApiSuccessResponse } from "@/lib/data/api/api-response";
+import type { WithApi } from "@/lib/utils/types";
+import type { SpaceInvitationFindManyArgs } from "../models/space-invitation-find-many";
+
+async function findManySpaceInvitation<
+	T extends SpaceInvitationFindManyArgs,
+	R = WithApi<Prisma.SpaceInvitationGetPayload<T>>,
+>(spaceId: string, args: T): Promise<R[]> {
+	const { data } = await apiClient
+		.get(`space/${spaceId}/invitation`, {
+			searchParams: new URLSearchParams({ query: JSON.stringify(args) }),
+		})
+		.json<ApiSuccessResponse<R[]>>();
+
+	return data;
+}
+
+export { findManySpaceInvitation };

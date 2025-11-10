@@ -1,0 +1,413 @@
+{
+	"shared": {
+		"exprs": {
+			"created_by": "Created By",
+			"created_at": "Created At",
+			"updated_at": "Last Modified At",
+			"joined_at": "Joined At",
+			"expires_at": "Expires At",
+			"actions": "Actions",
+			"filters": "Filters",
+			"empty": "No items found.",
+
+			"create": "Create",
+			"update": "Update",
+			"delete": "Delete",
+			"add": "Add",
+			"edit": "Edit",
+			"remove": "Remove",
+			"cancel": "Cancel",
+			"reset": "Reset",
+			"filter": "Filter"
+		},
+
+		"errors": {
+			"unknown": "An unknown error has occurred.",
+			"internal": "Oops! Something went wrong.",
+			"required": "This field is requierd.",
+			"invalid": "The value entered is invalid.",
+			"duplicate": "An item with this value already exists.",
+			"duplicate_fn": "An item with value \"{value}\" already exists."
+		},
+
+		"components": {
+			"loading": { "label": "Retrieving data..." },
+
+			"filter-bar": {
+				"title": "Applied filters",
+				"clear_all": "Remove all filters"
+			},
+
+			"pagination": {
+				"previous": {
+					"title": "Previous",
+					"description": "Go to previous page"
+				},
+				"next": {
+					"title": "Next",
+					"description": "Go to next page"
+				}
+			},
+
+			"confirm-dialog": {
+				"title": "Are you sure you want to proceed?",
+				"description": "You can’t undo this action once it’s completed."
+			}
+		}
+	},
+
+	"app": {
+		"root": {
+			"routes": {
+				"dashboard": "Dashboard",
+
+				"spaces": "Spaces",
+
+				"space": "Current Space",
+				"space_categories": "Categories",
+				"space_expenses": "Expenses",
+				"space_members": "Members",
+
+				"invitations": "Invitations"
+			}
+		},
+
+		"dashboard": {
+			"root": {
+				"sidebar": {
+					"menu": {
+						"items": {
+							"dashboard": {
+								"title": "Dashboard"
+							},
+							"spaces": {
+								"title": "Spaces"
+							},
+							"invitations": {
+								"title": "Invitations"
+							}
+						}
+					},
+
+					"space-menu": {
+						"personal-space": {
+							"title": "Personal Spaces"
+						},
+
+						"group-space": {
+							"title": "Group Spaces"
+						},
+
+						"shared": {
+							"actions": {
+								"create": "Add new space"
+							}
+						}
+					}
+				},
+
+				"language": {
+					"title": "Languages"
+				},
+
+				"logout-button": {
+					"label": "Logout"
+				}
+			},
+
+			"spaces": {
+				"space": {
+					"layout": {
+						"page-list": {
+							"items": {
+								"dashboard": "Dashboard",
+								"expenses": "Expenses",
+								"categories": "Categories",
+								"members": "Members",
+								"invitations": "Invitations"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+
+	"features": {
+		"auth": {
+			"components": {
+				"login-form": {
+					"fields": {
+						"username": {
+							"title": "Username"
+						},
+						"password": {
+							"title": "Password"
+						}
+					},
+					"actions": {
+						"login": "Login",
+						"no_account": {
+							"description": "Don't have an account?",
+							"link": "Sign up"
+						}
+					}
+				},
+
+				"signup-form": {
+					"fields": {
+						"nickname": {
+							"title": "Nickname"
+						},
+						"username": {
+							"title": "Username"
+						},
+						"password": {
+							"title": "Password"
+						}
+					},
+					"actions": {
+						"signup": "Sign Up",
+						"has_account": {
+							"description": "Already have an account?",
+							"link": "Log in"
+						}
+					}
+				},
+
+				"signup-close": {
+					"message": "Registration is closed for now."
+				}
+			}
+		},
+
+		"user": {
+			"types": {
+				"user": {
+					"email": "Email"
+				}
+			}
+		},
+
+		"space": {
+			"types": {
+				"space": {
+					"name": "Name",
+					"type": "Type"
+				},
+
+				"space-type": {
+					"PERSONAL": "Personal",
+					"GROUP": "Group"
+				}
+			},
+
+			"components": {
+				"space-list": {
+					"title": "Spaces",
+					"item": {
+						"actions": {
+							"edit": "Edit space",
+							"delete": "Delete space"
+						}
+					},
+					"actions": {
+						"create": "Add New Space"
+					}
+				},
+
+				"space-create": {
+					"title": "Add New Space"
+				},
+
+				"space-update": {
+					"title": "Edit Space"
+				}
+			}
+		},
+
+		"space-member": {
+			"types": {
+				"space-member": {
+					"user": "Member",
+					"role": "Role",
+					"status": "Status"
+				},
+
+				"space-member-role": {
+					"OWNER": "Owner",
+					"ADMIN": "Admin",
+					"MEMBER": "Member"
+				},
+
+				"space-member-status": {
+					"ACTIVE": "Active",
+					"REMOVED": "Removed"
+				}
+			},
+
+			"components": {
+				"space-member-list": {
+					"title": "List of Members",
+					"item": {
+						"actions": {
+							"role_update": "Update member's role",
+							"remove": "Remove member"
+						}
+					}
+				},
+
+				"space-member-role-update": {
+					"title": "Update Member Role"
+				}
+			}
+		},
+
+		"space-invitation": {
+			"types": {
+				"space-invitation": {
+					"space": "Space",
+					"user_public_id": "User Public ID"
+				}
+			},
+
+			"components": {
+				"my-invitation-list": {
+					"title": "My Invitations",
+					"columns": {
+						"invited_by": "Invited By"
+					},
+					"item": {
+						"actions": {
+							"accept": "Accept invitation",
+							"decline": "Decline invitation"
+						}
+					}
+				},
+
+				"space-invitation-list": {
+					"title": "List of Invitations",
+					"columns": {
+						"invited_by": "Invited By"
+					},
+					"item": {
+						"actions": {
+							"edit": "Edit invitation",
+							"delete": "Delete invitation"
+						}
+					},
+					"actions": {
+						"create": "Create New Invitation"
+					}
+				},
+
+				"space-invitation-create": {
+					"title": "Create New Invitation",
+					"fields": {
+						"user_public_id": {
+							"title": "User Public ID"
+						}
+					}
+				}
+			}
+		},
+
+		"category": {
+			"types": {
+				"category": {
+					"title": "Title",
+					"slug": "Slug"
+				}
+			},
+
+			"components": {
+				"category-list": {
+					"title": "List of Categories",
+					"item": {
+						"actions": {
+							"edit": "Edit category",
+							"delete": "Delete category"
+						}
+					},
+					"actions": {
+						"create": "Add New Category"
+					}
+				},
+
+				"category-upsert": {
+					"title": {
+						"create": "Add New Category",
+						"update": "Edit Category"
+					}
+				},
+
+				"category-delete": {
+					"title": "Delete Category",
+					"description": {
+						"without_expenses": "Are you sure you want to delete “{title}” category? This action cannot be undone.",
+						"with_expenses": "Before deleting the “{title}” category, please choose another category to reassign any associated expenses. This ensures your expense records remain intact."
+					},
+					"fields": {
+						"category": {
+							"title": "Category"
+						}
+					}
+				}
+			}
+		},
+
+		"expense": {
+			"types": {
+				"expense": {
+					"title": "Title",
+					"date": "Date",
+					"amount": "Amount",
+					"category": "Category"
+				}
+			},
+
+			"components": {
+				"expense-list": {
+					"title": "List of Expenses",
+					"item": {
+						"actions": {
+							"edit": "Edit expense",
+							"delete": "Delete expense"
+						}
+					},
+					"actions": {
+						"create": "Add New Expense",
+						"report": "View Report",
+						"export": "Export Expenses"
+					},
+
+					"filter-dialog": {
+						"title": "Filter Expenses"
+					}
+				},
+
+				"recent-expense-list": {
+					"title": "Recent Expenses",
+					"actions": {
+						"create": "Add New Expense"
+					}
+				},
+
+				"expense-month-report": {
+					"title": "{monthName} Expenses Report",
+					"fields": {
+						"total": { "title": "Total expenses" },
+						"daily_avg": { "title": "Daily Average" }
+					}
+				},
+
+				"expense-upsert": {
+					"title": {
+						"create": "Add New Expense",
+						"update": "Edit Expense"
+					}
+				}
+			}
+		}
+	}
+}

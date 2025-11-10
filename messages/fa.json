@@ -1,0 +1,413 @@
+{
+	"shared": {
+		"exprs": {
+			"created_by": "ایجاد توسط",
+			"created_at": "زمان ایجاد",
+			"updated_at": "آخرین بروزرسانی",
+			"joined_at": "زمان پیوستن",
+			"expires_at": "زمان انقضا",
+			"actions": "عملیات‌ها",
+			"filters": "فیلترها",
+			"empty": "موردی یافت نشد.",
+
+			"create": "ایجاد",
+			"update": "بروزرسانی",
+			"delete": "حذف",
+			"add": "افزودن",
+			"edit": "ویرایش",
+			"remove": "حذف",
+			"cancel": "بازگشت",
+			"reset": "ریست",
+			"filter": "فیلتر"
+		},
+
+		"errors": {
+			"unknown": "خطای ناشناخته‌ای رخ داده است.",
+			"internal": "اوه! مشکلی پیش آمده است.",
+			"required": "پر کردن این فیلد الزامی است.",
+			"invalid": "مقدار وارد شده نامعتبر است.",
+			"duplicate": "موردی با این مقدار از پیش وجود دارد.",
+			"duplicate_fn": "موردی با مقدار \"{value}\" از پیش وجود دارد."
+		},
+
+		"components": {
+			"loading": { "label": "در حال دریافت اطلاعات..." },
+
+			"filter-bar": {
+				"title": "فیلترهای اعمال شده",
+				"clear_all": "حذف همه فیلترها"
+			},
+
+			"pagination": {
+				"previous": {
+					"title": "قبلی",
+					"description": "به صفحه قبل برو"
+				},
+				"next": {
+					"title": "بعدی",
+					"description": "به صفحه بعد برو"
+				}
+			},
+
+			"confirm-dialog": {
+				"title": "آیا مطمئن هستید که می‌خواهید ادامه دهید؟",
+				"description": "پس از انجام این کار، دیگر نمی‌توانید آن را بازگردانید."
+			}
+		}
+	},
+
+	"app": {
+		"root": {
+			"routes": {
+				"dashboard": "پیشخوان",
+
+				"spaces": "فضاها",
+
+				"space": "فضای فعلی",
+				"space_categories": "دسته‌بندی‌ها",
+				"space_expenses": "هزینه‌ها",
+				"space_members": "افراد",
+
+				"invitations": "دعوتنامه‌ها"
+			}
+		},
+
+		"dashboard": {
+			"root": {
+				"sidebar": {
+					"menu": {
+						"items": {
+							"dashboard": {
+								"title": "پیشخوان"
+							},
+							"spaces": {
+								"title": "فضاها"
+							},
+							"invitations": {
+								"title": "دعوتنامه‌ها"
+							}
+						}
+					},
+
+					"space-menu": {
+						"personal-space": {
+							"title": "فضاهای شخصی"
+						},
+
+						"group-space": {
+							"title": "فضاهای گروهی"
+						},
+
+						"shared": {
+							"actions": {
+								"create": "افزودن فضای جدید"
+							}
+						}
+					}
+				},
+
+				"language": {
+					"title": "زبان‌ها"
+				},
+
+				"logout-button": {
+					"label": "خروج از حساب کاربری"
+				}
+			},
+
+			"spaces": {
+				"space": {
+					"layout": {
+						"page-list": {
+							"items": {
+								"dashboard": "پیشخوان",
+								"expenses": "هزینه‌ها",
+								"categories": "دسته‌بندی‌ها",
+								"members": "افراد",
+								"invitations": "دعوتنامه‌ها"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+
+	"features": {
+		"auth": {
+			"components": {
+				"login-form": {
+					"fields": {
+						"username": {
+							"title": "نام کاربری"
+						},
+						"password": {
+							"title": "رمز عبور"
+						}
+					},
+					"actions": {
+						"login": "ورود",
+						"no_account": {
+							"description": "حساب کاربری ندارید؟",
+							"link": "ثبت نام کنید."
+						}
+					}
+				},
+
+				"signup-form": {
+					"fields": {
+						"nickname": {
+							"title": "نام مستعار"
+						},
+						"username": {
+							"title": "نام کاربری"
+						},
+						"password": {
+							"title": "رمز عبور"
+						}
+					},
+					"actions": {
+						"signup": "ثبت نام",
+						"has_account": {
+							"description": "پیش از این حساب کاربری ساخته‌اید؟",
+							"link": "وارد شوید."
+						}
+					}
+				},
+
+				"signup-close": {
+					"message": "هم اکنون ثبت نام امکان‌پذیر نیست."
+				}
+			}
+		},
+
+		"user": {
+			"types": {
+				"user": {
+					"email": "پست الکترونیک"
+				}
+			}
+		},
+
+		"space": {
+			"types": {
+				"space": {
+					"name": "نام",
+					"type": "نوع"
+				},
+
+				"space-type": {
+					"PERSONAL": "شخصی",
+					"GROUP": "گروهی"
+				}
+			},
+
+			"components": {
+				"space-list": {
+					"title": "فضاها",
+					"item": {
+						"actions": {
+							"edit": "ویرایش فضا",
+							"delete": "حذف فضا"
+						}
+					},
+					"actions": {
+						"create": "افزودن فضای جدید"
+					}
+				},
+
+				"space-create": {
+					"title": "افزودن فضای جدید"
+				},
+
+				"space-update": {
+					"title": "ویرایش فضا"
+				}
+			}
+		},
+
+		"space-member": {
+			"types": {
+				"space-member": {
+					"user": "فرد",
+					"role": "نقش",
+					"status": "وضعیت"
+				},
+
+				"space-member-role": {
+					"OWNER": "مالک",
+					"ADMIN": "مدیر",
+					"MEMBER": "فرد عادی"
+				},
+
+				"space-member-status": {
+					"ACTIVE": "فعال",
+					"REMOVED": "حذف شده"
+				}
+			},
+
+			"components": {
+				"space-member-list": {
+					"title": "فهرست افراد",
+					"item": {
+						"actions": {
+							"role_update": "بروزرسانی نقش فرد",
+							"remove": "حذف فرد"
+						}
+					}
+				},
+
+				"space-member-role-update": {
+					"title": "بروزرسانی نقش فرد"
+				}
+			}
+		},
+
+		"space-invitation": {
+			"types": {
+				"space-invitation": {
+					"space": "فضا",
+					"user_public_id": "شناسه کاربر"
+				}
+			},
+
+			"components": {
+				"my-invitation-list": {
+					"title": "دعوتنامه‌های من",
+					"columns": {
+						"invited_by": "دعوت شده توسط"
+					},
+					"item": {
+						"actions": {
+							"accept": "پذیرفتن دعوتنامه",
+							"decline": "رد دعوتنامه"
+						}
+					}
+				},
+
+				"space-invitation-list": {
+					"title": "فهرست دعوتنامه‌ها",
+					"columns": {
+						"invited_by": "دعوت شده توسط"
+					},
+					"item": {
+						"actions": {
+							"edit": "ویرایش دعوتنامه",
+							"delete": "حذف دعوتنامه"
+						}
+					},
+					"actions": {
+						"create": "ایجاد دعوتنامه جدید"
+					}
+				},
+
+				"space-invitation-create": {
+					"title": "ایجاد دعوتنامه جدید",
+					"fields": {
+						"user_public_id": {
+							"title": "شناسه کاربر"
+						}
+					}
+				}
+			}
+		},
+
+		"category": {
+			"types": {
+				"category": {
+					"title": "عنوان",
+					"slug": "کلیدواژه"
+				}
+			},
+
+			"components": {
+				"category-list": {
+					"title": "فهرست دسته‌بندی‌ها",
+					"item": {
+						"actions": {
+							"edit": "ویرایش دسته‌بندی",
+							"delete": "حذف دسته‌بندی"
+						}
+					},
+					"actions": {
+						"create": "افزودن دسته‌بندی جدید"
+					}
+				},
+
+				"category-upsert": {
+					"title": {
+						"create": "افزودن دسته‌بندی جدید",
+						"update": "ویرایش دسته‌بندی"
+					}
+				},
+
+				"category-delete": {
+					"title": "حذف دسته‌بندی",
+					"description": {
+						"without_expenses": "آیا مطمئن هستید که می‌خواهید دسته‌بندی «{title}» را حذف کنید؟ این عملیات غیرقابل بازگشت است.",
+						"with_expenses": "قبل از حذف دسته‌بندی «{title}»، لطفاً یک دسته‌بندی دیگر را برای انتقال هزینه‌های مرتبط انتخاب کنید."
+					},
+					"fields": {
+						"category": {
+							"title": "دسته‌بندی"
+						}
+					}
+				}
+			}
+		},
+
+		"expense": {
+			"types": {
+				"expense": {
+					"title": "عنوان",
+					"date": "تاریخ",
+					"amount": "مبلغ",
+					"category": "دسته‌بندی"
+				}
+			},
+
+			"components": {
+				"expense-list": {
+					"title": "فهرست هزینه‌ها",
+					"item": {
+						"actions": {
+							"edit": "ویرایش هزینه",
+							"delete": "پاک کردن هزینه"
+						}
+					},
+					"actions": {
+						"create": "افزودن هزینه جدید",
+						"report": "مشاهده گزارش",
+						"export": "برون‌ریزی هزینه‌ها"
+					},
+
+					"filter-dialog": {
+						"title": "فیلتر هزینه‌ها"
+					}
+				},
+
+				"recent-expense-list": {
+					"title": "هزینه‌های اخیر",
+					"actions": {
+						"create": "افزودن هزینه جدید"
+					}
+				},
+
+				"expense-month-report": {
+					"title": "گزارش هزینه‌های {monthName}",
+					"fields": {
+						"total": { "title": "مجموع هزینه‌ها" },
+						"daily_avg": { "title": "میانگین روزانه" }
+					}
+				},
+
+				"expense-upsert": {
+					"title": {
+						"create": "افزودن هزینه جدید",
+						"update": "ویرایش هزینه"
+					}
+				}
+			}
+		}
+	}
+}

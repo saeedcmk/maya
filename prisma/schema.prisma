@@ -1,0 +1,231 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username  String   @unique @db.VarChar(64)
+  nickname  String   @unique @db.VarChar(128)
+  publicId  String   @unique @map("public_id") @db.VarChar(64)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  refreshTokens RefreshToken[]
+
+  space           Space[]
+  memberships     SpaceMember[]
+  invitations     SpaceInvitation[] @relation(name: "CreatedInvitations")
+  updatedMembers  SpaceMember[]     @relation(name: "UpdatedMembers")
+  categories      Category[]
+  paidExpenses    Expense[]         @relation(name: "PaidExpenses")
+  createdExpenses Expense[]         @relation(name: "CreatedExpenses")
+  updatedExpenses Expense[]         @relation(name: "UpdatedExpenses")
+
+  features UserFeature[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  token     String    @unique
+  revoked   Boolean   @default(false)
+  createdAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(6)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model Space {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String    @db.VarChar(255)
+  type      SpaceType
+  ownerId   String    @map("owner_id") @db.Uuid
+  createdAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  owner       User              @relation(fields: [ownerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  members     SpaceMember[]
+  invitations SpaceInvitation[]
+  categories  Category[]
+  expenses    Expense[]
+
+  features SpaceFeature[]
+
+  @@map("spaces")
+}
+
+enum SpaceType {
+  PERSONAL @map("personal")
+  GROUP    @map("group")
+}
+
+model SpaceMember {
+  id           String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  spaceId      String            @map("space_id") @db.Uuid
+  userId       String            @map("user_id") @db.Uuid
+  invitationId String?           @map("invitation_id") @db.Uuid
+  role         SpaceMemberRole
+  status       SpaceMemberStatus @default(ACTIVE)
+  joinedAt     DateTime          @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("joined_at") @db.Timestamptz(6)
+  updatedById  String            @map("updated_by") @db.Uuid
+  updatedAt    DateTime          @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  space      Space            @relation(fields: [spaceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user       User             @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  invitation SpaceInvitation? @relation(fields: [invitationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  updatedBy  User             @relation(name: "UpdatedMembers", fields: [updatedById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("space_members")
+}
+
+enum SpaceMemberRole {
+  OWNER  @map("owner")
+  ADMIN  @map("admin")
+  MEMBER @map("member")
+}
+
+enum SpaceMemberStatus {
+  ACTIVE  @map("active")
+  REMOVED @map("removed")
+}
+
+model SpaceInvitation {
+  id           String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  spaceId      String                @map("space_id") @db.Uuid
+  userPublicId String?               @map("user_public_id") @db.Uuid
+  createdById  String                @map("created_by") @db.Uuid
+  token        String?               @db.VarChar(255)
+  status       SpaceInvitationStatus @default(PENDING)
+  expiresAt    DateTime              @map("expires_at") @db.Timestamptz(6)
+  maxUses      Int?                  @map("max_uses")
+  usesCount    Int                   @map("uses_count")
+  createdAt    DateTime              @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+
+  space     Space         @relation(fields: [spaceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  createdBy User          @relation(name: "CreatedInvitations", fields: [createdById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  members   SpaceMember[]
+
+  @@index([userPublicId])
+  @@map("space_invitations")
+}
+
+enum SpaceInvitationStatus {
+  PENDING  @map("pending")
+  ACCEPTED @map("accepted")
+  DECLINED @map("declined")
+  EXPIRED  @map("expired")
+}
+
+model Category {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  spaceId   String   @map("space_id") @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  title     String   @db.VarChar(128)
+  slug      String   @db.VarChar(128)
+  createdAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  space    Space     @relation(fields: [spaceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  expenses Expense[]
+
+  @@unique([spaceId, slug])
+  @@map("categories")
+}
+
+model Expense {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  spaceId     String   @map("space_id") @db.Uuid
+  title       String   @db.VarChar(512)
+  date        DateTime @db.Date
+  amount      Decimal  @db.Decimal
+  categoryId  String   @map("category_id") @db.Uuid
+  paidById    String   @map("paid_by") @db.Uuid
+  createdById String   @map("created_by") @db.Uuid
+  createdAt   DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedById String   @map("updated_by") @db.Uuid
+  updatedAt   DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  space     Space    @relation(fields: [spaceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  category  Category @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  paidBy    User     @relation(name: "PaidExpenses", fields: [paidById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  createdBy User     @relation(name: "CreatedExpenses", fields: [createdById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  updatedBy User     @relation(name: "UpdatedExpenses", fields: [updatedById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("expenses")
+}
+
+model Feature {
+  id        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key       String       @db.VarChar(255)
+  scope     FeatureScope
+  type      FeatureType
+  value     String       @db.VarChar(255)
+  price     Decimal?     @default(0)
+  currency  String       @db.VarChar(3)
+  label     String?      @db.VarChar(512)
+  sortOrder Int?         @map("sort_order") @db.SmallInt
+  isActive  Boolean?     @default(true) @map("is_active")
+  createdAt DateTime     @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime     @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  userFeatures  UserFeature[]
+  spaceFeatures SpaceFeature[]
+
+  @@index([key, scope], map: "features_key_scope_idx")
+  @@map("features")
+}
+
+enum FeatureScope {
+  USER  @map("user")
+  SPACE @map("space")
+}
+
+enum FeatureType {
+  BOOLEAN @map("boolean")
+  NUMERIC @map("numeric")
+  TEXT    @map("text")
+}
+
+model UserFeature {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String @map("user_id") @db.Uuid
+  featureId String @map("feature_id") @db.Uuid
+
+  expires_at DateTime?
+  createdAt  DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+  @@map("user_features")
+}
+
+model SpaceFeature {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  spaceId   String    @map("space_id") @db.Uuid
+  featureId String    @map("feature_id") @db.Uuid
+  expiresAt DateTime? @map("expires_at") @db.Timestamptz(6)
+  createdAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  space   Space   @relation(fields: [spaceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([spaceId])
+  @@map("space_features")
+}

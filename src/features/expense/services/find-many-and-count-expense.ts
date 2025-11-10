@@ -1,0 +1,22 @@
+import type { Prisma } from "@prisma/client";
+import { apiClient } from "@/lib/data/api/api-client";
+import type { ApiSuccessResponse } from "@/lib/data/api/api-response";
+import type { WithApi } from "@/lib/utils/types";
+import type { ExpenseFindManyArgs } from "../models/expense-find-many";
+
+async function findManyAndCountExpense<
+	T extends Omit<ExpenseFindManyArgs, "count">,
+	R = WithApi<Prisma.ExpenseGetPayload<T>>,
+>(spaceId: string, args: T): Promise<{ data: R[]; count: number }> {
+	const { data } = await apiClient
+		.get(`space/${spaceId}/expense`, {
+			searchParams: new URLSearchParams({
+				query: JSON.stringify({ ...args, count: true }),
+			}),
+		})
+		.json<ApiSuccessResponse<{ data: R[]; count: number }>>();
+
+	return data;
+}
+
+export { findManyAndCountExpense };
