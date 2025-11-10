@@ -7,7 +7,7 @@ async function LoginPage({
 }: {
 	searchParams: Promise<{ debug?: boolean }>;
 }) {
-	const { debug } = await searchParams;
+	const { debug = true } = await searchParams;
 
 	const messages = await getPartialMessages([
 		"features.auth.components.login-form",

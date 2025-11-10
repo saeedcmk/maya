@@ -8,7 +8,7 @@ async function SignUpPage({
 }: {
 	searchParams: Promise<{ debug?: boolean }>;
 }) {
-	const { debug } = await searchParams;
+	const { debug = true } = await searchParams;
 
 	const messages = await getPartialMessages([
 		"features.auth.components.signup-form",
