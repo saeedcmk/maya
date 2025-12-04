@@ -1,6 +1,7 @@
 "use client";
 
 import { LucideCheck, LucideChevronsUpDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,6 +56,8 @@ function useDate() {
 }
 
 function ExpenseListWidgetMonthSelect() {
+	const t = useTranslations();
+
 	const { generateMonths, toMonthAndYear } = useDate();
 
 	const { changePeriod } = useExpenseListContext();
@@ -139,7 +142,7 @@ function ExpenseListWidgetMonthSelect() {
 								className="cursor-pointer justify-center"
 								onSelect={() => loadMore()}
 							>
-								Load more...
+								{t("expense-list.month-select.actions.more")}
 							</CommandItem>
 						</CommandGroup>
 					</CommandList>

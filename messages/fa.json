@@ -381,6 +381,12 @@
 						"export": "برون‌ریزی هزینه‌ها"
 					},
 
+					"month-select": {
+						"actions": {
+							"more": "نمایش بیشتر..."
+						}
+					},
+
 					"filter-dialog": {
 						"title": "فیلتر هزینه‌ها"
 					}

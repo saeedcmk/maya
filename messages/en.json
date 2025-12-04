@@ -381,6 +381,12 @@
 						"export": "Export Expenses"
 					},
 
+					"month-select": {
+						"actions": {
+							"more": "Show more..."
+						}
+					},
+
 					"filter-dialog": {
 						"title": "Filter Expenses"
 					}
