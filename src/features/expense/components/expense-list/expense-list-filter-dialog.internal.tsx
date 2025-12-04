@@ -75,7 +75,10 @@ function ExpenseListFilterDialog({
 	return (
 		<Dialog open={open} onOpenChange={onClose.bind(null, undefined)}>
 			<Form {...form}>
-				<DialogContent aria-describedby={undefined}>
+				<DialogContent
+					aria-describedby={undefined}
+					className="max-w-screen-2xs"
+				>
 					<DialogHeader>
 						<DialogTitle>{t("expense-list.filter-dialog.title")}</DialogTitle>
 					</DialogHeader>
