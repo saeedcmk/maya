@@ -15,7 +15,7 @@ type ExpenseListContextType =
 		changePeriod: (input: { year: number; month: number }) => void;
 
 		filterArgs: ExpenseListFilterArgs;
-		setFilterArgs: (filterArgs: ExpenseListFilterArgs) => void;
+		changeFilterArgs: (filterArgs: ExpenseListFilterArgs) => void;
 
 		openFilterDialog: () => Promise<void>;
 		openReportDialog: () => Promise<void>;

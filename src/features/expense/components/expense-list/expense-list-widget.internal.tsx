@@ -36,7 +36,7 @@ function ExpenseListWidget() {
 		pagination,
 
 		filterArgs,
-		setFilterArgs,
+		changeFilterArgs,
 	} = useExpenseListContext();
 
 	const { data: categoryOptions } = useCategoryOptions(space.id);
@@ -84,7 +84,7 @@ function ExpenseListWidget() {
 				<>
 					<FilterBar
 						filterArgs={filterArgs}
-						setFilterArgs={setFilterArgs}
+						setFilterArgs={changeFilterArgs}
 						config={filterBarConfig}
 					/>
 

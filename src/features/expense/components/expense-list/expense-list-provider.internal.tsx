@@ -54,6 +54,9 @@ function ExpenseListProvider(props: React.PropsWithChildren) {
 
 	const { space } = useSpaceContext();
 
+	const pagination = usePagination();
+	const { pageSize, offset, setPage } = pagination;
+
 	const [period, setPeriod] = useState(() => ({
 		year: getYear(),
 		month: getMonth(),
@@ -79,14 +82,20 @@ function ExpenseListProvider(props: React.PropsWithChildren) {
 	const handlePeriodChange = useCallback(
 		(input: { year: number; month: number }) => {
 			setPeriod({ ...input });
+			setPage(0);
 		},
-		[setPeriod]
+		[setPeriod, setPage]
 	);
 
 	const [filterArgs, setFilterArgs] = useState<ExpenseListFilterArgs>({});
 
-	const pagination = usePagination();
-	const { pageSize, offset } = pagination;
+	const handleFilterArgsChange = useCallback(
+		(filterArgs: ExpenseListFilterArgs) => {
+			setFilterArgs({ ...filterArgs });
+			setPage(0);
+		},
+		[setPage]
+	);
 
 	const queryArgs = useMemo(() => {
 		const where: Prisma.ExpenseWhereInput = {
@@ -127,10 +136,10 @@ function ExpenseListProvider(props: React.PropsWithChildren) {
 	const openFilterDialog = useCallback(async () => {
 		await dialogs.open(
 			ExpenseListFilterDialog,
-			{ spaceId: space.id, filterArgs, setFilterArgs },
+			{ spaceId: space.id, filterArgs, setFilterArgs: handleFilterArgsChange },
 			{ messages }
 		);
-	}, [dialogs, messages, space.id, filterArgs]);
+	}, [dialogs, messages, space.id, filterArgs, handleFilterArgsChange]);
 
 	const openReportDialog = useCallback(async () => {
 		await dialogs.open(
@@ -188,7 +197,7 @@ function ExpenseListProvider(props: React.PropsWithChildren) {
 			changePeriod: handlePeriodChange,
 
 			filterArgs,
-			setFilterArgs,
+			changeFilterArgs: handleFilterArgsChange,
 
 			openFilterDialog,
 			openReportDialog,
@@ -206,7 +215,7 @@ function ExpenseListProvider(props: React.PropsWithChildren) {
 			pagination,
 			period,
 			filterArgs,
-			setFilterArgs,
+			handleFilterArgsChange,
 			handlePeriodChange,
 			openFilterDialog,
 			openReportDialog,
