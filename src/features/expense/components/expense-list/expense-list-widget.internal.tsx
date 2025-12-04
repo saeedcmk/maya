@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Loading } from "@/components/ui/loading";
 import { Pagination } from "@/components/ui/pagination/pagination.internal";
+import { parsePaginationArgs } from "@/components/ui/pagination/pagination.utils";
 import { useCategoryOptions } from "@/features/category/hooks/use-category-options";
 import { useSpaceContext } from "@/features/space/hooks/use-space-context";
 import { ExpenseListFilterArgs } from "./expense-list.types.internal";
@@ -90,7 +91,7 @@ function ExpenseListWidget() {
 					<CardBody>
 						<div className="space-y-6">
 							<ExpenseListTable />
-							<Pagination {...pagination} count={count} />
+							<Pagination {...parsePaginationArgs(pagination)} count={count} />
 						</div>
 					</CardBody>
 				</>

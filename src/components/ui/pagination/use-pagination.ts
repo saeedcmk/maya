@@ -6,8 +6,8 @@ type UsePaginationReturn = {
 	offset: number;
 	from: number;
 	to: number;
-	onPageChange: React.Dispatch<React.SetStateAction<number>>;
-	onPageSizeChange: React.Dispatch<React.SetStateAction<number>>;
+	setPage: React.Dispatch<React.SetStateAction<number>>;
+	setPageSize: React.Dispatch<React.SetStateAction<number>>;
 };
 
 function usePagination(): UsePaginationReturn {
@@ -24,8 +24,8 @@ function usePagination(): UsePaginationReturn {
 		offset,
 		from,
 		to,
-		onPageChange: setPage,
-		onPageSizeChange: setPageSize,
+		setPage,
+		setPageSize,
 	};
 }
 
