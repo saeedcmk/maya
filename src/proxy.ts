@@ -5,7 +5,7 @@ import { routing } from "./lib/i18n/i18n-routing";
 
 const handleI18nRouting = createIntlMiddleware(routing);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 	const response = handleI18nRouting(request);
 
 	return await authMiddleware(request, response);

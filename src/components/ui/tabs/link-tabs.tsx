@@ -22,13 +22,16 @@ function LinkTabs({ tabs }: { tabs: LinkTab[] }) {
 	const router = useRouter();
 	const pathname = usePathname();
 
+	const [prevPathname, setPrevPathname] = useState<string>(pathname);
+
 	const [value, setValue] = useState<string>("");
 	const [selected, setSelected] = useState<LinkTab | null>(null);
 
-	if (!value) {
+	if (!value || pathname !== prevPathname) {
 		const activeTab = tabs.find((tab) => isTabActive(tab, pathname))!;
 		setValue(activeTab.value);
 		setSelected(activeTab);
+		setPrevPathname(pathname);
 	}
 
 	const finalValue = selected?.value ?? value;
@@ -38,12 +41,6 @@ function LinkTabs({ tabs }: { tabs: LinkTab[] }) {
 		setSelected(tab);
 		router.push(tab.href);
 	}
-
-	useEffect(() => {
-		const activeTab = tabs.find((tab) => isTabActive(tab, pathname))!;
-		setValue(activeTab.value);
-		setSelected(activeTab);
-	}, [tabs, pathname]);
 
 	const tabListRef = useRef<HTMLDivElement | null>(null);
 	const activeTabRef = useRef<HTMLButtonElement | null>(null);

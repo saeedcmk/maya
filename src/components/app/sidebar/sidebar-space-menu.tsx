@@ -102,18 +102,6 @@ function SpaceList({
 		}
 	}, [router, dialogs, messages, type]);
 
-	const SpaceCreateItem = () => (
-		<SidebarMenuItem>
-			<SidebarMenuButton
-				className="cursor-pointer px-2.5 md:h-8 md:px-2"
-				onClick={handleCreateButtonClick}
-			>
-				<LucidePlus absoluteStrokeWidth className="!size-5" strokeWidth={1.5} />
-				<span>{t(`sidebar.space-menu.shared.actions.create`)}</span>
-			</SidebarMenuButton>
-		</SidebarMenuItem>
-	);
-
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>
@@ -123,7 +111,19 @@ function SpaceList({
 			<SidebarGroupContent>
 				<SidebarMenu>
 					{!items || !items.length ? (
-						<SpaceCreateItem />
+						<SidebarMenuItem>
+							<SidebarMenuButton
+								className="cursor-pointer px-2.5 md:h-8 md:px-2"
+								onClick={handleCreateButtonClick}
+							>
+								<LucidePlus
+									absoluteStrokeWidth
+									className="size-5!"
+									strokeWidth={1.5}
+								/>
+								<span>{t(`sidebar.space-menu.shared.actions.create`)}</span>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
 					) : (
 						items.map((space) => (
 							<SpaceItem key={space.id} space={space} onClick={onItemClick} />
@@ -154,7 +154,7 @@ function SpaceItem({
 				>
 					<LucideBox
 						absoluteStrokeWidth
-						className="!size-5"
+						className="size-5!"
 						strokeWidth={1.5}
 					/>
 					<span>{space.name}</span>

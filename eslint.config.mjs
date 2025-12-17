@@ -1,4 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -10,13 +12,12 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+	...nextCoreWebVitals,
+	...nextTypescript,
 	...compat.config({
-		extends: [
-			"next/core-web-vitals",
-			"next/typescript",
-			"plugin:prettier/recommended",
-		],
+		extends: ["plugin:prettier/recommended"],
 		plugins: ["simple-import-sort"],
+
 		rules: {
 			"simple-import-sort/imports": [
 				"error",
@@ -30,11 +31,21 @@ const eslintConfig = [
 			"@typescript-eslint/no-unused-vars": "warn",
 			"@typescript-eslint/no-explicit-any": "off",
 		},
+
 		parserOptions: {
 			sourceType: "module",
 			ecmaVersion: "latest",
 		},
 	}),
+	{
+		ignores: [
+			"node_modules/**",
+			".next/**",
+			"out/**",
+			"build/**",
+			"next-env.d.ts",
+		],
+	},
 ];
 
 export default eslintConfig;

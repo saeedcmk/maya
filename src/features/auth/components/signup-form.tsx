@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -76,11 +76,9 @@ function SignUpForm() {
 		}
 	}
 
-	const [loginLink, setLoginLink] = useState<string>("/auth/signup");
-
-	useEffect(() => {
-		setLoginLink(`/auth/login${document?.location.search}`);
-	}, []);
+	const loginLink = searchParams.size
+		? `/auth/login?${searchParams}`
+		: "/auth/login";
 
 	return (
 		<Form {...form}>
