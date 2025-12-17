@@ -83,7 +83,7 @@ function LoginForm({ debug = false }: { debug?: boolean }) {
 						onSubmit={form.handleSubmit(handleSubmit)}
 					>
 						{errors.root?.message && (
-							<Alert variant="destructive">
+							<Alert intent="danger">
 								<AlertDescription>{errors.root.message}</AlertDescription>
 							</Alert>
 						)}

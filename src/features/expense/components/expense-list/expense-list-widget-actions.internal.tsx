@@ -51,7 +51,7 @@ function ExpenseListWidgetActions() {
 			<ExpenseListWidgetMonthSelect />
 
 			<Button
-				color="gray"
+				color="inverse"
 				disabled={isLoading}
 				type="button"
 				variant="outline"
@@ -63,7 +63,7 @@ function ExpenseListWidgetActions() {
 
 			<DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
 				<DropdownMenuTrigger asChild>
-					<Button color="gray" type="button" variant="outline">
+					<Button color="inverse" type="button" variant="outline">
 						<LucideEllipsis />
 						<span className="sr-only">Actions</span>
 					</Button>

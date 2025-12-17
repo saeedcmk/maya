@@ -52,7 +52,7 @@ function SpaceListWidget() {
 						<Loading size="sm" />
 					) : (
 						!!error && (
-							<Alert variant="destructive">
+							<Alert intent="danger">
 								<AlertDescription>{error.message}</AlertDescription>
 							</Alert>
 						)

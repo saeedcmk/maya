@@ -83,7 +83,7 @@ function ExpenseMonthReportDialog({
 				</DialogHeader>
 
 				{error && (
-					<Alert variant="destructive">
+					<Alert intent="danger">
 						<AlertDescription>
 							{error.message || t("errors.unknown")}
 						</AlertDescription>

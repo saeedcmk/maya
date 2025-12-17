@@ -89,7 +89,7 @@ function SignUpForm() {
 						onSubmit={form.handleSubmit(handleSubmit)}
 					>
 						{errors.root?.message && (
-							<Alert variant="destructive">
+							<Alert intent="danger">
 								<AlertDescription>{errors.root.message}</AlertDescription>
 							</Alert>
 						)}

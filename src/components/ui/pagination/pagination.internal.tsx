@@ -38,7 +38,7 @@ function Pagination({ page, pageSize, count, onPageChange }: PaginationProps) {
 						aria-label={t("previous.description")}
 						className="gap-1 ps-2.5"
 						disabled={!before}
-						size="default"
+						size="base"
 						onClick={() => {
 							onPageChange(page - 1);
 						}}
@@ -53,7 +53,7 @@ function Pagination({ page, pageSize, count, onPageChange }: PaginationProps) {
 						aria-label={t("next.description")}
 						className="gap-1 pe-2.5"
 						disabled={!after}
-						size="default"
+						size="base"
 						onClick={() => {
 							onPageChange(page + 1);
 						}}

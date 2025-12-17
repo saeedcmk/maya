@@ -102,9 +102,13 @@ function ExpenseListWidgetMonthSelect() {
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
 			<PopoverTrigger asChild>
-				<Button className="w-36 justify-between" color="gray" variant="outline">
+				<Button
+					className="w-36 justify-between"
+					color="inverse"
+					variant="outline"
+				>
 					<span>{selectedMonth}</span>
-					<LucideChevronsUpDown className="opacity-50" />
+					<LucideChevronsUpDown />
 				</Button>
 			</PopoverTrigger>
 

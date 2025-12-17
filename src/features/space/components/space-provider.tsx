@@ -72,7 +72,7 @@ const SpaceProvider = ({
 
 	if (error) {
 		return (
-			<Alert variant="destructive">
+			<Alert intent="danger">
 				<AlertDescription>{error.message}</AlertDescription>
 			</Alert>
 		);
