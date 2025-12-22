@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
+import { cache } from "react";
 import { JWT_ACCESS_TOKEN_NAME } from "../../auth-consts";
 import type { Session } from "../../types/session";
 import { verifyAccessToken } from "../../utils/verify-access-token";
 
-async function getSessionServer(): Promise<Session | null> {
+const getSessionServer = cache(async (): Promise<Session | null> => {
 	const cookieStore = await cookies();
 
 	const accessToken = cookieStore.get(JWT_ACCESS_TOKEN_NAME)?.value;
@@ -12,6 +13,6 @@ async function getSessionServer(): Promise<Session | null> {
 		: null;
 
 	return accessPayload;
-}
+});
 
 export { getSessionServer };
