@@ -27,7 +27,7 @@ const GET = withAuthApi(async (req, { user }) => {
 		const expiredPendingInvitations = invitations.filter(
 			(invitation) =>
 				invitation.status === SpaceInvitationStatus.PENDING &&
-				invitation.expiresAt > new TZDate()
+				invitation.expiresAt < new TZDate()
 		);
 
 		if (expiredPendingInvitations.length) {

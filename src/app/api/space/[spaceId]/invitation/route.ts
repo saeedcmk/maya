@@ -90,7 +90,7 @@ const POST = withAuthApi(
 			]);
 
 			if (
-				features.max_space_members >=
+				features.max_space_members <=
 				numOfActiveMembers + numOfPendingInvitations
 			) {
 				return failure("Maximum number of members exceeded");

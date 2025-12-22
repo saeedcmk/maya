@@ -48,7 +48,7 @@ const routes = {
 
 	invitations: {
 		key: "invitations",
-		url: () => "/invitations",
+		url: () => "/dashboard/invitations",
 	} satisfies Route,
 } as const;
 
