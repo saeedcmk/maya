@@ -308,6 +308,14 @@
 							"title": "User Public ID"
 						}
 					}
+				},
+
+				"pending-invitations-alert": {
+					"title": "Pending invitations",
+					"description": "You have {count, plural, =1 {one invitation} other {# invitations}} waiting for your response.",
+					"actions": {
+						"view": "View invitations"
+					}
 				}
 			}
 		},
