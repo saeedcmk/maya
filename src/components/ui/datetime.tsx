@@ -5,12 +5,17 @@ import { cn } from "@/lib/utils/cn";
 
 type DateTimeProps = React.ComponentProps<"div"> & {
 	date: Date | string;
+	render?: (args: {
+		time: string;
+		date: string;
+		separator: string;
+	}) => React.ReactElement;
 };
 
-function DateTime({ className, date: d, ...props }: DateTimeProps) {
+function DateTime({ className, date: d, render, ...props }: DateTimeProps) {
 	const { intl } = useLanguage();
 
-	const seperator = intl.startsWith("fa") ? "،" : ",";
+	const separator = intl.startsWith("fa") ? "،" : ",";
 
 	const timeFormat = new Intl.DateTimeFormat(intl, {
 		hour: "2-digit",
@@ -32,10 +37,18 @@ function DateTime({ className, date: d, ...props }: DateTimeProps) {
 	const formattedWeekday = weekdayFormat.format(date);
 	const formattedDate = dateFormat.format(date);
 
+	if (render) {
+		return render({
+			time: formattedTime,
+			date: `${formattedWeekday}${separator} ${formattedDate}`,
+			separator,
+		});
+	}
+
 	return (
-		<div className={cn("space-y-2", className)} {...props}>
+		<div className={cn("space-y-1", className)} {...props}>
 			<div>{formattedTime}</div>
-			<div>{`${formattedWeekday}${seperator} ${formattedDate}`}</div>
+			<div>{`${formattedWeekday}${separator} ${formattedDate}`}</div>
 		</div>
 	);
 }
