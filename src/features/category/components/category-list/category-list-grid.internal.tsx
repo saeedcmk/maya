@@ -29,7 +29,7 @@ function CategoryListGrid() {
 			{categories?.map((category) => (
 				<Card
 					key={category.id}
-					className="to-muted rounded-xl border-2 bg-gradient-to-r from-white rtl:bg-gradient-to-l"
+					className="to-muted bg-linear-to-r from-white shadow-none rtl:bg-linear-to-l"
 				>
 					<CardContent className="flex items-center gap-4">
 						<div className="grow cursor-default overflow-hidden">
