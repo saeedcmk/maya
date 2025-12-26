@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getSessionOrThrowServer } from "@/features/auth/services/server/get-session-or-throw-server";
 import { type SpaceLookup } from "@/features/space/types/space-lookup";
+import { SpaceMemberStatus } from "@/features/space-member/enums/space-member-status";
 import { I18nProvider } from "@/lib/i18n/components/i18n-provider";
 import { getDirection } from "@/lib/i18n/utils/get-direction";
 import { getPartialMessages } from "@/lib/i18n/utils/get-partial-messages";
@@ -40,7 +41,12 @@ async function DashboardLayout({
 	const { userId } = await getSessionOrThrowServer();
 
 	const spaces: SpaceLookup[] = await prisma.space.findMany({
-		where: { OR: [{ ownerId: userId }, { members: { some: { userId } } }] },
+		where: {
+			OR: [
+				{ ownerId: userId },
+				{ members: { some: { userId, status: SpaceMemberStatus.ACTIVE } } },
+			],
+		},
 		orderBy: { name: "asc" },
 		select: { id: true, name: true, type: true },
 	});

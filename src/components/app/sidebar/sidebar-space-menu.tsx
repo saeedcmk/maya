@@ -16,10 +16,12 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useLoggedInUser } from "@/features/auth/hooks/use-logged-in-user";
 import { SpaceType } from "@/features/space/enums/space-type";
 import type { SpaceFindManyArgs } from "@/features/space/models/space-find-many";
 import { findManySpace } from "@/features/space/services/find-many-space";
 import type { SpaceLookup } from "@/features/space/types/space-lookup";
+import { SpaceMemberStatus } from "@/features/space-member/enums/space-member-status";
 import { routes } from "@/lib/routes";
 
 const SpaceCreateDialog = dynamic(
@@ -36,7 +38,17 @@ function SidebarSpaceMenu({
 		url: string
 	) => void;
 }) {
+	const {
+		session: { userId },
+	} = useLoggedInUser();
+
 	const queryArgs = {
+		where: {
+			OR: [
+				{ ownerId: userId },
+				{ members: { some: { userId, status: SpaceMemberStatus.ACTIVE } } },
+			],
+		},
 		orderBy: { name: "asc" },
 		select: { id: true, name: true, type: true },
 	} satisfies SpaceFindManyArgs;
