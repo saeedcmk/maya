@@ -1,3 +1,4 @@
+import { utc } from "@date-fns/utc";
 import type { Prisma } from "@prisma/client";
 import { withAuthApi } from "@/features/auth/utils/with-auth-api";
 import type { ExpenseCreateInput } from "@/features/expense/models/expense-create";
@@ -117,7 +118,7 @@ const POST = withAuthApi(async (req, { user, params }) => {
 		const data: Prisma.ExpenseCreateInput = {
 			title: normalizedTitle,
 			amount: normalizedAmount,
-			date: new Date(normalizedDate),
+			date: utc(normalizedDate),
 			category: { connect: { id: input.categoryId } },
 			paidBy: { connect: { id: user.id } },
 			space: {

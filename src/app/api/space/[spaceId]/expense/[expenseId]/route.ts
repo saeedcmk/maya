@@ -1,3 +1,4 @@
+import { utc } from "@date-fns/utc";
 import type { Prisma } from "@prisma/client";
 import { withAuthApi } from "@/features/auth/utils/with-auth-api";
 import type { ExpenseUpdateInput } from "@/features/expense/models/expense-update";
@@ -32,7 +33,7 @@ const PATCH = withAuthApi(async (req, { user, params }) => {
 		}
 
 		if (typeof input.date !== "undefined") {
-			data.date = new Date(input.date.trim());
+			data.date = utc(input.date.trim());
 		}
 
 		const updatedExpense = await prisma.expense.update({
