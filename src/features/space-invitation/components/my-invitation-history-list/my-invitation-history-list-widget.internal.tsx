@@ -11,19 +11,23 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Loading } from "@/components/ui/loading";
-import { useMyInvitationListContext } from "./my-invitation-list-context.internal";
-import { MyInvitationListTable } from "./my-invitation-list-table.internal";
+import { useMyInvitationHistoryListContext } from "./my-invitation-history-list-context.internal";
+import { MyInvitationHistoryListTable } from "./my-invitation-history-list-table.internal";
 
-function MyInvitationListWidget() {
+function MyInvitationHistoryListWidget() {
 	const t = useTranslations();
 
-	const { items: invitations, isLoading, error } = useMyInvitationListContext();
+	const {
+		items: invitations,
+		isLoading,
+		error,
+	} = useMyInvitationHistoryListContext();
 
 	return (
 		<Card>
 			<CardHeader>
 				<CardInfo>
-					<CardTitle>{t("my-invitation-list.title")}</CardTitle>
+					<CardTitle>{t("my-invitation-history-list.title")}</CardTitle>
 				</CardInfo>
 			</CardHeader>
 
@@ -41,11 +45,11 @@ function MyInvitationListWidget() {
 				</CardContent>
 			) : (
 				<CardBody>
-					<MyInvitationListTable invitations={invitations} />
+					<MyInvitationHistoryListTable invitations={invitations} />
 				</CardBody>
 			)}
 		</Card>
 	);
 }
 
-export { MyInvitationListWidget };
+export { MyInvitationHistoryListWidget };

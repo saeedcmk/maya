@@ -267,29 +267,40 @@
 			"types": {
 				"space-invitation": {
 					"space": "فضا",
-					"user_public_id": "شناسه کاربر"
+					"user_public_id": "شناسه کاربر",
+					"status": "وضعیت",
+					"created_by": "دعوت شده توسط",
+					"resolved_at": "نهایی شده در"
+				},
+
+				"space-invitation-status": {
+					"PENDING": "در انتظار",
+					"ACCEPTED": "پذیرفته شده",
+					"DECLINED": "رد شده",
+					"EXPIRED": "منقضی شده"
 				}
 			},
 
 			"components": {
-				"my-invitation-list": {
-					"title": "دعوتنامه‌های من",
-					"columns": {
-						"invited_by": "دعوت شده توسط"
-					},
+				"my-pending-invitation-list": {
+					"title": "دعوتنامه‌های در انتظار",
 					"item": {
+						"invited_by": "دعوت شده توسط {name}",
+						"space": "به فضای {name}",
+						"expires_at": "منقضی در",
 						"actions": {
-							"accept": "پذیرفتن دعوتنامه",
-							"decline": "رد دعوتنامه"
+							"accept": "پذیرفتن",
+							"decline": "رد کردن"
 						}
 					}
 				},
 
+				"my-invitation-history-list": {
+					"title": "تاریخچه دعوتنامه‌ها"
+				},
+
 				"space-invitation-list": {
 					"title": "فهرست دعوتنامه‌ها",
-					"columns": {
-						"invited_by": "دعوت شده توسط"
-					},
 					"item": {
 						"actions": {
 							"edit": "ویرایش دعوتنامه",

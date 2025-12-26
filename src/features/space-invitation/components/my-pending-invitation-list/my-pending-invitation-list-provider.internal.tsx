@@ -8,26 +8,33 @@ import { SpaceInvitationStatus } from "../../enums/space-invitation-status";
 import type { SpaceInvitationFindManyArgs } from "../../models/space-invitation-find-many";
 import { decideInvitationStatus } from "../../services/decide-invitation-status";
 import { findManyMyInvitation } from "../../services/find-many-my-invitation";
-import type { CustomSpaceInvitation } from "./my-invitation-list.types.internal";
+import type { CustomSpaceInvitation } from "./my-pending-invitation-list.types.internal";
 import {
-	MyInvitationListContext,
-	type MyInvitationListContextType,
-} from "./my-invitation-list-context.internal";
+	MyPendingInvitationListContext,
+	type MyPendingInvitationListContextType,
+} from "./my-pending-invitation-list-context.internal";
 
 const SpaceInvitationDeclineDialog = dynamic(
 	() => import("@/components/ui/dialog/confirm-dialog")
 );
 
-const queryArgs = {
-	where: { status: "PENDING" },
-	include: { space: true, createdBy: true },
-	orderBy: { createdAt: "asc" },
-} satisfies SpaceInvitationFindManyArgs;
-
-function MyInvitationListProvider(props: React.PropsWithChildren) {
+function MyPendingInvitationListProvider(props: React.PropsWithChildren) {
 	const dialogs = useDialogs();
 
 	const queryClient = useQueryClient();
+
+	const queryArgs = useMemo(
+		() =>
+			({
+				where: {
+					status: SpaceInvitationStatus.PENDING,
+					expiresAt: { gt: new Date() },
+				},
+				include: { space: true, createdBy: true },
+				orderBy: { createdAt: "asc" },
+			}) satisfies SpaceInvitationFindManyArgs,
+		[]
+	);
 
 	const {
 		data: invitations,
@@ -67,7 +74,7 @@ function MyInvitationListProvider(props: React.PropsWithChildren) {
 		[dialogs, declineInvitationOp]
 	);
 
-	const contextValue = useMemo<MyInvitationListContextType>(
+	const contextValue = useMemo<MyPendingInvitationListContextType>(
 		() => ({
 			isLoading: isFetching,
 			error,
@@ -79,7 +86,7 @@ function MyInvitationListProvider(props: React.PropsWithChildren) {
 		[isFetching, error, invitations, acceptInvitationOp, openDeclineDialog]
 	);
 
-	return <MyInvitationListContext value={contextValue} {...props} />;
+	return <MyPendingInvitationListContext value={contextValue} {...props} />;
 }
 
-export { MyInvitationListProvider };
+export { MyPendingInvitationListProvider };

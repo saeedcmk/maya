@@ -34,10 +34,13 @@ const POST = withAuthApi(async (req, { user, params }) => {
 			await prisma.spaceInvitation.update({
 				where: {
 					id: invitationId,
-					status: SpaceInvitationStatus.PENDING,
 					userPublicId: user.publicId,
+					status: SpaceInvitationStatus.PENDING,
 				},
-				data: { status: SpaceInvitationStatus.DECLINED },
+				data: {
+					status: SpaceInvitationStatus.DECLINED,
+					resolvedAt: new Date(),
+				},
 			});
 
 			return success(undefined, "Invitation declined successfully");
@@ -53,6 +56,7 @@ const POST = withAuthApi(async (req, { user, params }) => {
 				data: {
 					status: SpaceInvitationStatus.ACCEPTED,
 					usesCount: invitation.usesCount + 1,
+					resolvedAt: new Date(),
 				},
 			}),
 			prisma.spaceMember.create({

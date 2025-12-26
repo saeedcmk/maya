@@ -1,10 +1,10 @@
 import { UTCDate } from "@date-fns/utc";
 import type { Prisma } from "@prisma/client";
 import { addDays } from "date-fns";
-import { TZDate } from "react-day-picker";
 import { withAuthApi } from "@/features/auth/utils/with-auth-api";
 import { withSpaceFeatureApi } from "@/features/space-feature/utils/with-space-feature-api";
 import { SpaceInvitationStatus } from "@/features/space-invitation/enums/space-invitation-status";
+import { SpaceInvitationType } from "@/features/space-invitation/enums/space-invitation-type";
 import type { SpaceInvitationCreateInput } from "@/features/space-invitation/models/space-invitation-create";
 import { SpaceInvitationFindManyArgs } from "@/features/space-invitation/models/space-invitation-find-many";
 import { SpaceMemberRole } from "@/features/space-member/enums/space-member-role";
@@ -84,7 +84,7 @@ const POST = withAuthApi(
 					where: {
 						spaceId,
 						status: SpaceInvitationStatus.PENDING,
-						expiresAt: { gt: new TZDate() },
+						expiresAt: { gt: new Date() },
 					},
 				}),
 			]);
@@ -131,11 +131,11 @@ const POST = withAuthApi(
 						],
 					},
 				},
-				userPublicId: normalizedPublicId,
-				maxUses: 1,
-				usesCount: 0,
-				expiresAt,
 				createdBy: { connect: { id: user.id } },
+				userPublicId: normalizedPublicId,
+				type: SpaceInvitationType.DIRECT,
+				expiresAt,
+				maxUses: 1,
 			};
 
 			const createdInvitation = await prisma.spaceInvitation.create({

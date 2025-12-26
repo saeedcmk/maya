@@ -267,29 +267,40 @@
 			"types": {
 				"space-invitation": {
 					"space": "Space",
-					"user_public_id": "User Public ID"
+					"user_public_id": "User Public ID",
+					"status": "Status",
+					"created_by": "Invited By",
+					"resolved_at": "Resolved At"
+				},
+
+				"space-invitation-status": {
+					"PENDING": "Pending",
+					"ACCEPTED": "Accepted",
+					"DECLINED": "Declined",
+					"EXPIRED": "Expired"
 				}
 			},
 
 			"components": {
-				"my-invitation-list": {
-					"title": "My Invitations",
-					"columns": {
-						"invited_by": "Invited By"
-					},
+				"my-pending-invitation-list": {
+					"title": "Pending Invitations",
 					"item": {
+						"invited_by": "Invited by {name}",
+						"space": "to {name} space",
+						"expires_at": "Expires at",
 						"actions": {
-							"accept": "Accept invitation",
-							"decline": "Decline invitation"
+							"accept": "Accept",
+							"decline": "Ignore"
 						}
 					}
 				},
 
+				"my-invitation-history-list": {
+					"title": "Invitation History"
+				},
+
 				"space-invitation-list": {
 					"title": "List of Invitations",
-					"columns": {
-						"invited_by": "Invited By"
-					},
 					"item": {
 						"actions": {
 							"edit": "Edit invitation",

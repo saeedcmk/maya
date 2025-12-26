@@ -25,7 +25,7 @@ const SpaceInvitationDeleteDialog = dynamic(
 
 const queryArgs = {
 	include: { createdBy: true },
-	orderBy: { createdAt: "asc" },
+	orderBy: { createdAt: "desc" },
 } satisfies SpaceInvitationFindManyArgs;
 
 function SpaceInvitationListProvider(props: React.PropsWithChildren) {

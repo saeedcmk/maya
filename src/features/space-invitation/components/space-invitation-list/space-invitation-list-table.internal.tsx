@@ -11,6 +11,7 @@ import {
 import type { TableColumn } from "@/components/ui/table/table.types";
 import { tableRowNumberColumn } from "@/components/ui/table/table.utils";
 import { useSpaceContext } from "@/features/space/hooks/use-space-context";
+import { resolveInvitationStatus } from "../../utils/resolve-invitation-status";
 import type { CustomSpaceInvitation } from "./space-invitation-list.types.internal";
 import { useSpaceInvitationListContext } from "./space-invitation-list-context.internal";
 
@@ -33,9 +34,25 @@ function SpaceInvitationListTable() {
 				title: (t) => t("space-invitation.user_public_id"),
 			},
 			{
+				key: "status",
+				title: (t) => t("space-invitation.status"),
+				render: (invitation, { t }) =>
+					t(`space-invitation-status.${resolveInvitationStatus(invitation)}`),
+				width: 256,
+				skeleton: 2,
+			},
+			{
 				key: "expiresAt",
 				title: (t) => t("exprs.expires_at"),
 				render: (invitation) => <DateTime date={invitation.expiresAt} />,
+				width: 128,
+			},
+			{
+				key: "resolvedAt",
+				title: (t) => t("space-invitation.resolved_at"),
+				render: (invitation) =>
+					invitation.resolvedAt && <DateTime date={invitation.expiresAt} />,
+				defaultValue: "-",
 				width: 256,
 				skeleton: 2,
 			},

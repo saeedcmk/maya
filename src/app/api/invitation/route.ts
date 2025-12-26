@@ -1,7 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import { TZDate } from "react-day-picker";
 import { withAuthApi } from "@/features/auth/utils/with-auth-api";
-import { SpaceInvitationStatus } from "@/features/space-invitation/enums/space-invitation-status";
 import type { SpaceInvitationFindManyArgs } from "@/features/space-invitation/models/space-invitation-find-many";
 import { failure, success } from "@/lib/data/api/api-response";
 import { prisma } from "@/lib/prisma";
@@ -23,23 +21,6 @@ const GET = withAuthApi(async (req, { user }) => {
 			where,
 			...queryArgs,
 		});
-
-		const expiredPendingInvitations = invitations.filter(
-			(invitation) =>
-				invitation.status === SpaceInvitationStatus.PENDING &&
-				invitation.expiresAt < new TZDate()
-		);
-
-		if (expiredPendingInvitations.length) {
-			await prisma.spaceInvitation.updateMany({
-				where: {
-					id: {
-						in: expiredPendingInvitations.map((invitation) => invitation.id),
-					},
-				},
-				data: { status: SpaceInvitationStatus.EXPIRED },
-			});
-		}
 
 		return success(invitations);
 	} catch (err) {
