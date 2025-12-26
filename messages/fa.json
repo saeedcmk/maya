@@ -33,6 +33,10 @@
 		"components": {
 			"loading": { "label": "در حال دریافت اطلاعات..." },
 
+			"redirect-to-login": {
+				"label": "در حال انتقال به صفحه ورود..."
+			},
+
 			"filter-bar": {
 				"title": "فیلترهای اعمال شده",
 				"clear_all": "حذف همه فیلترها"

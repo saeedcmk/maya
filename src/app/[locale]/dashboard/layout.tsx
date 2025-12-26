@@ -15,6 +15,7 @@ import { getDirection } from "@/lib/i18n/utils/get-direction";
 import { getPartialMessages } from "@/lib/i18n/utils/get-partial-messages";
 import { prisma } from "@/lib/prisma";
 import { routes } from "@/lib/routes";
+import { LoggedInUserGuard } from "./_module/logged-in-user-guard";
 
 async function DashboardLayout({
 	children,
@@ -45,36 +46,38 @@ async function DashboardLayout({
 	});
 
 	return (
-		<I18nProvider messages={messages}>
-			<SidebarProvider
-				style={
-					{
-						"--sidebar-width": "16rem",
-					} as React.CSSProperties
-				}
-			>
-				<Sidebar side={side} spaces={spaces} />
-				<SidebarInset className="max-w-full pt-4">
-					<BreadcrumbProvider initialState={[toCrumb(routes.dashboard)]}>
-						<header className="bg-muted sticky top-0 z-10 h-12 shrink-0 px-6 py-3">
-							<div className="flex h-full w-full items-center gap-2">
-								<SidebarTrigger />
+		<LoggedInUserGuard>
+			<I18nProvider messages={messages}>
+				<SidebarProvider
+					style={
+						{
+							"--sidebar-width": "16rem",
+						} as React.CSSProperties
+					}
+				>
+					<Sidebar side={side} spaces={spaces} />
+					<SidebarInset className="max-w-full pt-4">
+						<BreadcrumbProvider initialState={[toCrumb(routes.dashboard)]}>
+							<header className="bg-muted sticky top-0 z-10 h-12 shrink-0 px-6 py-3">
+								<div className="flex h-full w-full items-center gap-2">
+									<SidebarTrigger />
 
-								<Separator
-									className="me-2 h-4"
-									decorative
-									orientation="vertical"
-								/>
+									<Separator
+										className="me-2 h-4"
+										decorative
+										orientation="vertical"
+									/>
 
-								<AppBreadcrumb />
-							</div>
-						</header>
+									<AppBreadcrumb />
+								</div>
+							</header>
 
-						<div className="space-y-6 p-6">{children}</div>
-					</BreadcrumbProvider>
-				</SidebarInset>
-			</SidebarProvider>
-		</I18nProvider>
+							<div className="space-y-6 p-6">{children}</div>
+						</BreadcrumbProvider>
+					</SidebarInset>
+				</SidebarProvider>
+			</I18nProvider>
+		</LoggedInUserGuard>
 	);
 }
 

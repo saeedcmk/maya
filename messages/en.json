@@ -33,6 +33,10 @@
 		"components": {
 			"loading": { "label": "Retrieving data..." },
 
+			"redirect-to-login": {
+				"label": "Redirecting to login page..."
+			},
+
 			"filter-bar": {
 				"title": "Applied filters",
 				"clear_all": "Remove all filters"
